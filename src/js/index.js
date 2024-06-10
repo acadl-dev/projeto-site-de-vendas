@@ -19,7 +19,7 @@ function gerarNumeroTransacao(){
     return Math.floor(Math.random()*10000);
 }
 
-function registrarVenda(produto, quantidade, precoUnitario) {
+function registrarVenda(produto, quantidade, precoUnitario, user) {
     let dataTransacao = registrarDataTransacao();
 
     let validaCamposObrigatorios = validarCamposObrigatorios(produto, quantidade, precoUnitario, dataTransacao);
@@ -30,7 +30,7 @@ function registrarVenda(produto, quantidade, precoUnitario) {
     if (validaCamposObrigatorios) {
         if (validaQuantidadeProduto) {
             if (validaPrecoUnitario) {
-                return "ID: "+ identificador +". Transação realizada com sucesso! Produto: " + produto + ", Quantidade: " + quantidade + " unidades, Preço Unitário: R$" + precoUnitario + ", data da transação: " + dataTransacao;
+                return "ID: "+ identificador +". Operador: "+ user + ". Transação realizada com sucesso! Produto: " + produto + ", Quantidade: " + quantidade + " unidades, Preço Unitário: R$" + precoUnitario + ", data da transação: " + dataTransacao;
             } else {
                 return "Problemas na validação de Preço Unitário!";
             }
@@ -50,13 +50,17 @@ function registrarHistoricoAlteracao(aMensagem){
 }
 
 function vender(){
+    let user = document.getElementById("user").value;/* RN.06 - Histórico de Alterações: O sistema deve manter um histórico de todas as alterações feitas nos registros de vendas, incluindo quem fez a alteração e quando, para fins de auditoria e rastreabilidade. */
     let produto = document.getElementById("produto").value;
     let quantidade = document.getElementById("quantidade").value;
     let precoUnitario = document.getElementById("preco").value;
 
-    const mensagem = registrarVenda(produto, quantidade, precoUnitario);    
+    const mensagem = registrarVenda(produto, quantidade, precoUnitario, user);    
 
     registrarHistoricoAlteracao(mensagem);
    
 }
+
+
+
 
